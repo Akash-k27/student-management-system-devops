@@ -46,7 +46,6 @@ Terraform provisions:
 
 ## 🛠️ Tech Stack
 
-|------------------------|----------------------|
 | Layer                  | Tool                 |
 |------------------------|----------------------|
 | Application            | Django 4             |
@@ -59,7 +58,6 @@ Terraform provisions:
 | Monitoring             | Prometheus + Grafana |
 | Registry               | AWS ECR              |
 | Database               | SQLite (for demo)    |
-|------------------------|----------------------|
 
 
 ---
