@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: student-app
+  template:
+    metadata:
+      labels:
+        app: student-app
+    spec:
+      imagePullSecrets:
+        - name: ecr-creds
+        
+      initContainers:
+        - name: run-migrations
+          image: 775899413410.dkr.ecr.ap-south-1.amazonaws.com/student-management-system:48275b0d74ff3454161dcb582cffcba6a13e7a29
+          imagePullPolicy: Always
+          command:
+            - "sh"
+            - "-c"
+            - "python manage.py migrate"
+          env:
+            - name: ALLOWED_HOSTS
+              value: "localhost,127.0.0.1,.elb.amazonaws.com"
+
+      containers:
+        - name: student-app
+          image: 775899413410.dkr.ecr.ap-south-1.amazonaws.com/student-management-system:48275b0d74ff3454161dcb582cffcba6a13e7a29
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: ALLOWED_HOSTS
+              value: "localhost,127.0.0.1,.elb.amazonaws.com"
